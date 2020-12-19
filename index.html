@@ -2,8 +2,43 @@
 <head lang="en">
     <meta charset="utf-8">
     <title>Straigh line challenge route analysis</title>
+    <style>
+        #gpx-input {
+            border: 2px dashed black;
+            border-radius: 20px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
     <input type="file" id="gpx-input" accept="application/gpx+xml">
+    <table>
+        <tbody>
+            <tr>
+                <td>Line length:</td>
+                <td><span id="route-len"></span> km</td>
+            </tr>
+            <tr>
+                <td>Actual line length:</td>
+                <td><span id="track-len"></span> km</td>
+            </tr>
+            <tr>
+                <td>Maximum deviation:</td>
+                <td><span id="max-dev"></span> m</td>
+            </tr>
+            <tr>
+                <td>Maximum deviation location:</td>
+                <td><span id="max-dev-at"></span></td>
+            </tr>
+            <tr>
+                <td>Average deviation:</td>
+                <td><span id="avg-dev"></span> m</td>
+            </tr>
+            <tr>
+                <td>Area:</td>
+                <td><span id="area"></span> m²</td>
+            </tr>
+        </tbody>
+    </table>
     <script src="./index.js" type="module"></script>
 </body>

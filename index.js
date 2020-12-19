@@ -1,8 +1,7 @@
 import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.2.1/latlon-spherical.min.js';
 
 const gpx_input = document.getElementById("gpx-input");
-gpx_input.addEventListener("change", handleFiles, false);
-function handleFiles() {
+gpx_input.onchange = function() {
     const gpx_file = this.files[0];
     const reader = new FileReader();
     reader.onload = onLoad;
@@ -35,6 +34,7 @@ function onLoad(e) {
 
 function analyze(track, start, end) {
     const route_len = start.distanceTo(end);
+    let track_len = 0;
 
     let total_deviation = 0;
     let deviation_count = 0;
@@ -44,10 +44,16 @@ function analyze(track, start, end) {
 
     let area = 0;
 
+    let prev_point = null;
     let prev_dist = 0;
     for (const point of track) {
         const dist = point.alongTrackDistanceTo(start, end);
         if (dist < 0 || dist > route_len || dist < prev_dist) continue;
+        
+        if (prev_point != null) {
+            track_len += point.distanceTo(prev_point);
+        }
+        prev_point = point;
 
         const deviation = Math.abs(point.crossTrackDistanceTo(start, end));
         total_deviation += deviation;
@@ -66,12 +72,20 @@ function analyze(track, start, end) {
     }
 
     const average_deviation = total_deviation / deviation_count;
-    display(route_len, max_deviation, max_deviation_at, average_deviation, area);
+    display(route_len, track_len, max_deviation, max_deviation_at, average_deviation, area);
 }
 
-function display(route_len, max_dev, max_dev_at, avg_dev, area) {
+function display(route_len, track_len, max_dev, max_dev_at, avg_dev, area) {
     console.log(`route length ${(route_len / 1000).toFixed(2)} km`);
+    console.log(`track length ${(track_len / 1000).toFixed(2)} km`);
     console.log(`maximum deviation ${max_dev.toFixed(2)} m at ${max_dev_at}`);
     console.log(`average deviation ${avg_dev.toFixed(2)} m`);
     console.log(`are enclosed ${area.toFixed(2)} m²`);
+
+    document.getElementById('route-len').innerText = (route_len / 1000).toFixed(2);
+    document.getElementById('track-len').innerText = (track_len / 1000).toFixed(2);
+    document.getElementById('max-dev').innerText = max_dev.toFixed(2);
+    document.getElementById('max-dev-at').innerText = max_dev_at;
+    document.getElementById('avg-dev').innerText = avg_dev.toFixed(2);
+    document.getElementById('area').innerText = area.toFixed(2);
 }
