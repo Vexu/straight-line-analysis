@@ -1,44 +1,94 @@
 <!DOCTYPE html>
 <head lang="en">
     <meta charset="utf-8">
-    <title>Straigh line challenge route analysis</title>
+    <title>Straigh line mission line analysis</title>
     <style>
-        #gpx-input {
+        body {
+            text-align: center;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        h1 {
+            margin: 50px;
+        }
+        #file-upload {
             border: 2px dashed black;
             border-radius: 20px;
             height: 100px;
+            vertical-align: middle;
+            padding: 15px;
+            margin: 10px;
+        }
+        #gpx-input {
+            display: none;
+        }
+        #file-upload,
+        table {
+            margin: 10px;
+            float: left;
+            text-align: left;
+        }
+        fieldset {
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            border-radius: 10px;
+            background-color: #fafafa;
+        }
+        .right-align {
+            text-align: right;
+        }
+        td {
+            padding-right: 25px;
+        }
+        span {
+            color: blue;
         }
     </style>
 </head>
 <body>
-    <input type="file" id="gpx-input" accept="application/gpx+xml">
-    <table>
-        <tbody>
-            <tr>
-                <td>Line length:</td>
-                <td><span id="route-len"></span> km</td>
-            </tr>
-            <tr>
-                <td>Actual line length:</td>
-                <td><span id="track-len"></span> km</td>
-            </tr>
-            <tr>
-                <td>Maximum deviation:</td>
-                <td><span id="max-dev"></span> m</td>
-            </tr>
-            <tr>
-                <td>Maximum deviation location:</td>
-                <td><span id="max-dev-at"></span></td>
-            </tr>
-            <tr>
-                <td>Average deviation:</td>
-                <td><span id="avg-dev"></span> m</td>
-            </tr>
-            <tr>
-                <td>Area:</td>
-                <td><span id="area"></span> m²</td>
-            </tr>
-        </tbody>
-    </table>
+    <h1>Straight line mission line analysis tool</h1>
+    <fieldset>
+        <label for="gpx-input" id="file-upload">
+            <p>Drop GPX file here.</p>
+            <p>(or click to select)</p>
+        </label>
+        <input type="file" id="gpx-input" accept="application/gpx+xml">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="right-align">Line length:</td>
+                    <td><span id="route-len">0</span> km</td>
+                </tr>
+                <tr>
+                    <td class="right-align">Actual line length:</td>
+                    <td><span id="track-len">0</span> km</td>
+                </tr>
+                <tr>
+                    <td class="right-align">Maximum deviation:</td>
+                    <td><span id="max-dev">0</span> m</td>
+                </tr>
+                <tr>
+                    <td class="right-align">Maximum deviation location:</td>
+                    <td><span id="max-dev-at"></span></td>
+                </tr>
+                <tr>
+                    <td class="right-align">Average deviation:</td>
+                    <td><span id="avg-dev">0</span> m</td>
+                </tr>
+                <tr>
+                    <td class="right-align">Area:</td>
+                    <td><span id="area">0</span> m²</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <footer>
+        <p>View source on <a href="https://github.com/Vexu/straight-line-analysis">GitHub</a></p>
+    </footer>
     <script src="./index.js" type="module"></script>
 </body>
