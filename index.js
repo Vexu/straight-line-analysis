@@ -101,6 +101,10 @@ function analyze(track, start, end) {
             max_deviation_at = point;
         }
 
+        if (prev_dist == 0) {
+            prev_dist = dist;
+        }
+
         // use simple Riemann sum for area 
         const dist_delta = dist - prev_dist;
         area += deviation * dist_delta;
