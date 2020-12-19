@@ -42,17 +42,28 @@ function onLoad(e) {
     analyze(track, start, end);
 }
 
+const deviation_plot_layout = {
+    yaxis: {
+        title: "deviation from line (m)"
+    },
+    xaxis: {
+        title: "distance from start (m)"
+    }
+};
+
 function analyze(track, start, end) {
     const route_len = start.distanceTo(end);
     let track_len = 0;
 
     let total_deviation = 0;
-    let deviation_count = 0;
 
     let max_deviation = 0;
     let max_deviation_at = null;
 
     let area = 0;
+
+    let deviations = [];
+    let distances = [];
 
     let prev_point = null;
     let prev_dist = 0;
@@ -67,7 +78,9 @@ function analyze(track, start, end) {
 
         const deviation = Math.abs(point.crossTrackDistanceTo(start, end));
         total_deviation += deviation;
-        deviation_count += 1;
+
+        deviations.push(deviation);
+        distances.push(dist);
 
         if (deviation > max_deviation) {
             max_deviation = deviation;
@@ -81,7 +94,15 @@ function analyze(track, start, end) {
         prev_dist = dist;
     }
 
-    const average_deviation = total_deviation / deviation_count;
+    
+    var trace1 = {
+        x: distances,
+        y: deviations,
+        type: "scatter",
+    };
+    Plotly.newPlot('deviation-plot', [trace1], deviation_plot_layout, {responsive: true});
+
+    const average_deviation = total_deviation / deviations.length;
     display(route_len, track_len, max_deviation, max_deviation_at, average_deviation, area);
 }
 
