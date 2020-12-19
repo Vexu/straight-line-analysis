@@ -6,7 +6,17 @@ gpx_input.onchange = function() {
     const reader = new FileReader();
     reader.onload = onLoad;
     reader.readAsText(gpx_file)
-}
+};
+const file_upload = document.getElementById("file-upload");
+file_upload.ondragover = file_upload.ondragenter = (e) => e.preventDefault();
+file_upload.ondrop = function(e) {
+    const gpx_file = e.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onload = onLoad;
+    reader.readAsText(gpx_file)
+
+    e.preventDefault();
+};
 
 function onLoad(e) {
     const text = e.target.result;
