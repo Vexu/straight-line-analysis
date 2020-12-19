@@ -18,10 +18,24 @@ file_upload.ondrop = function(e) {
     e.preventDefault();
 };
 
+const error_msg = document.getElementById("error-msg");
+
 function onLoad(e) {
-    const text = e.target.result;
+    error_msg.style.display = "none";
+    try {
+        parseGPX(e.target.result);
+    } catch (err) {
+        error_msg.innerText = err;
+        error_msg.style.display = "block";
+    }
+}
+
+function parseGPX(text) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, "application/xhtml+xml");
+    if (doc.getElementsByTagName("parsererror").length != 0) {
+        throw "GPX file failed to parse";
+    }
 
     let track = [];
     for (const point of doc.getElementsByTagName("trkpt")) {

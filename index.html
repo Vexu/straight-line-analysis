@@ -49,11 +49,22 @@
         span {
             color: blue;
         }
+        #error-msg {
+            background-color: #ff0033;
+            color: white;
+            border-radius: 5px;
+            margin: 20px auto;
+            width: 500px;
+            height: 40px;
+            line-height: 35px;
+            display: none;
+        }
     </style>
 	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 </head>
 <body>
     <h1>Straight line mission line analysis tool</h1>
+    <p id="error-msg">Track must have at least one point</p>
     <fieldset>
         <label for="gpx-input" id="file-upload">
             <p>Drop GPX file here.</p>
